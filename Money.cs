@@ -14,19 +14,15 @@ namespace CurrencyConverter
         public string symbol;
         public double result;
 
-        public Money(double _amount, string _currency)
+        public Money(double _amount)
         {
             amount = _amount;
-            currency = _currency;
         }
 
-        public virtual string Conversion(string convertTo)
+        public virtual string Conversion()
         {
-            rate = 0;
-            symbol = "$";
-            result = amount * rate;
-            return $"{symbol} {result}";
+            return "Unable to convert.";
         }
-        
+
     }
 }

@@ -13,7 +13,7 @@ namespace CurrencyConverter
         {
             "USD", "EUR", "GBP", "INR", "AUD", "CAD", "ZAR", "NZD", "JPY"
         };
-        static string convertTo;
+        static string convertTo = "USD";
         static string toConvert;
         static string userEntry;
 
@@ -22,6 +22,13 @@ namespace CurrencyConverter
         *****************************************/
         static void Main(string[] args)
         {
+            //string result;
+
+            //Money convertTo = new USD(100);
+            //result = convertTo.ConvertFromEUR();
+            //Console.WriteLine(result);
+
+            
             bool valid = true;
 
             while (valid)
@@ -29,6 +36,7 @@ namespace CurrencyConverter
                 GetInput();
                 //GetConvertTo();
                 Console.WriteLine($"Amount: {amount} Currency Type to Convert: {toConvert} \n");
+                Conversion(toConvert);
                 Console.ReadLine();
                 Console.Clear();
             }
@@ -72,7 +80,7 @@ namespace CurrencyConverter
 
             }
         }
-        
+
         /**********************************************************************************
         * AmountFromString()
         *   Creates the amount from the userEntry string
@@ -110,14 +118,20 @@ namespace CurrencyConverter
         }
 
         /**********************************************************************************
-        * CreateObject()
-        *   Creates object of correct type
+        * Conversion()
+        *   Creates object of correct type and converts currency
         **********************************************************************************/
-        private static void CreateObject(string currencyType)
+        private static void Conversion(string toConvert, string convertTo)
         {
-            if (currencyType == "USD")
+            if (toConvert == "USD")
             {
-                var usd = new USD(amount, currencyType);
+                Money usd = new USD(amount);
+                usd.Conversion(convertTo);
+            }
+            else if (toConvert == "EUR")
+            {
+                Money eur = new EUR(amount);
+                eur.Conversion(convertTo);
             }
         }
 

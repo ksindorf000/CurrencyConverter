@@ -2,23 +2,21 @@
 {
     internal class USD : Money
     {
-        public USD(double _amount, string _currency) : base(_amount, _currency)
+        public USD(double _amount) : base(_amount)
         {
             symbol = "$";
+            amount = _amount;
+            currency = "USD";
         }
 
-        public override string Conversion(string toConvert)
+        public override string Conversion()
         {
-            if (toConvert == "EUR")
-            {
-                rate = .94125;
-            }
+            rate = 0.94038;
+            result = amount / rate;
 
-
-            result = amount * rate;
-
-            return $"{result} {currency}";
+            return $"{symbol}{result} {currency}";
         }
+
 
     }
 }
