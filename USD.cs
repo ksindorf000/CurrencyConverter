@@ -4,15 +4,20 @@
     {
         public USD(double _amount, string _currency) : base(_amount, _currency)
         {
+            symbol = "$";
         }
 
-        public override string Conversion()
+        public override string Conversion(string toConvert)
         {
-            //rate
-            //symbol
-            //result
+            if (toConvert == "EUR")
+            {
+                rate = .94125;
+            }
 
-            //return $"{}";
+
+            result = amount * rate;
+
+            return $"{result} {currency}";
         }
 
     }

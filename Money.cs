@@ -20,7 +20,7 @@ namespace CurrencyConverter
             currency = _currency;
         }
 
-        public virtual string Conversion()
+        public virtual string Conversion(string convertTo)
         {
             rate = 0;
             symbol = "$";
