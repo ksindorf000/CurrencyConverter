@@ -8,5 +8,6 @@ namespace CurrencyConverter
 {
     class Money
     {
+
     }
 }

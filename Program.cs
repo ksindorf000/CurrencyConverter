@@ -21,40 +21,95 @@ namespace CurrencyConverter
         *****************************************/
         static void Main(string[] args)
         {
-            GetCurrency();
+            bool valid = true;
+
+            while (valid)
+            {
+                GetInput();
+                GetConvertTo();
+            }
         }
 
-        /*****************************************
-        * GetCurrency()
-        *   Accepts and validates user input
-        *   Creates an object of <T> Money
-        *****************************************/
-        public static void GetCurrency()
+        /***********************************************************************
+        * GetInput()
+        *   Accepts and validates user input for currency types & amount 
+        ***********************************************************************/
+        public static void GetInput()
         {
             string userEntry;
             string digits;
-            bool valid = true;
+            bool valid = false;
 
-            currency.ForEach(Console.Write);
-            Console.WriteLine("\n Please enter the amount and the type of currency to convert (1.00 USD): ");
-            userEntry = Console.ReadLine();
-
-            if (!userEntry.Contains("."))
+            while (!valid)
             {
-                Console.WriteLine("Please be sure that your amount is formatted like so: 0.00");
+                //Check for all components of valid entry (decimal point, letters, digits)
+                Console.WriteLine("\n Please enter the amount and the type of currency to convert (1.00 USD): ");
+                userEntry = Console.ReadLine().ToUpper();
+
+                if (!userEntry.Contains("."))
+                {
+                    Console.WriteLine("Please be sure that your amount is formatted like so: 0.00");
+                    valid = false;
+                }
+                else if (!userEntry.Any(char.IsLetter))
+                {
+                    Console.WriteLine("Please be sure that you have entered a valid currency type (USD).");
+                    valid = false;
+                }
+                else if (!userEntry.Any(char.IsDigit))
+                {
+                    Console.WriteLine("Please be sure that you have entered a valid amount (1.00)." +
+                        "Do not include the currency symbol ($).");
+                    valid = false;
+                }
+                else
+                {
+                    digits = string.Join("", userEntry.Where(char.IsDigit));
+                    valid = double.TryParse(digits, out amount);
+                    toConvert = string.Join("", userEntry.Where(char.IsLetter));
+                    valid = ValidateCurencyType(toConvert);
+                }
             }
+        }
 
-            digits = string.Join("", userEntry.Where(char.IsDigit));
-            valid = double.TryParse(digits, out amount);
+        /**********************************************************************************
+        * GetConvertTo()
+        *   Gets currency to be converted to
+        **********************************************************************************/
+        private static void GetConvertTo()
+        {
+            bool valid = false;
 
-            convertTo = string.Join("", userEntry.Where(char.IsLetter));
-            
-            if (!currency.Contains(convertTo))
+            Console.Clear();
+
+            while (!valid)
             {
-                Console.WriteLine($"{convertTo} is not an available currency.");
+                Console.WriteLine($"Amount: {amount} Currency Type to Convert: {toConvert} \n");
+                Console.WriteLine("Please enter the currency type you would like to convert to: ");
+                convertTo = Console.ReadLine().ToUpper();
+                valid = ValidateCurencyType(convertTo);
             }
+        }
 
-            Console.WriteLine(amount + "\n " + convertTo);
+        /**********************************************************************************
+        * ValidateCurrencyType()
+        *   Validates currency type and creates object of type Money
+        **********************************************************************************/
+        private static bool ValidateCurencyType(string currencyType)
+        {
+            bool valid;
+
+            if (!currency.Contains(currencyType))
+            {
+                Console.WriteLine($"{currencyType} is not an available currency.");
+                valid = false;
+            }
+            else
+            {
+                Console.WriteLine(amount + "\n " + currencyType);
+                valid = true;
+            }
+            return valid;
         }
     }
 }
