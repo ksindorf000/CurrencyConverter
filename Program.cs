@@ -111,5 +111,18 @@ namespace CurrencyConverter
             }
             return valid;
         }
+
+        /**********************************************************************************
+        * CreateObject()
+        *   Creates object of correct type
+        **********************************************************************************/
+        private static void CreateObject(string currencyType)
+        {
+            if (currencyType == "USD")
+            {
+                var usd = new USD(amount, currencyType);
+            }
+        }
+
     }
 }
