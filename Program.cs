@@ -8,150 +8,119 @@ namespace CurrencyConverter
 {
     class Program
     {
-        static double amount;
-        static List<string> currency = new List<string>()
-        {
-            "USD", "EUR", "GBP", "INR", "AUD", "CAD", "ZAR", "NZD", "JPY"
-        };
-        static string convertTo = "USD";
-        static string toConvert;
-        static string userEntry;
 
         /*****************************************
         * Main()
         *****************************************/
         static void Main(string[] args)
         {
-            //string result;
+            double amount = 100;
 
-            //Money convertTo = new USD(100);
-            //result = convertTo.ConvertFromEUR();
-            //Console.WriteLine(result);
+            Console.WriteLine("Conversions to USD: \n");
+            ConvertToUSD(amount);
 
-            
-            bool valid = true;
+            Console.WriteLine("\nConversions to EUR: \n");
+            ConvertToEUR(amount);
 
-            while (valid)
-            {
-                GetInput();
-                //GetConvertTo();
-                Console.WriteLine($"Amount: {amount} Currency Type to Convert: {toConvert} \n");
-                Conversion(toConvert);
-                Console.ReadLine();
-                Console.Clear();
-            }
+            Console.WriteLine("\nConversions to XBT: \n");
+            ConvertToXBT(amount);
+
         }
 
-        /***********************************************************************
-        * GetInput()
-        *   Accepts and validates user input for currency types & amount 
-        ***********************************************************************/
-        public static void GetInput()
+        /*****************************************
+        * ConvertToUSD()
+        *****************************************/
+        private static void ConvertToUSD(double amount)
         {
-            bool valid = false;
+            string result;
+            //USD to USD
+            Money convertUSD = new USD(amount);
+            result = convertUSD.ConvertFromUSD();
+            Console.WriteLine(result + $" from {amount}USD");
 
-            while (!valid)
-            {
-                //Check for all components of valid entry (decimal point, letters, digits)
-                Console.WriteLine("\n Please enter the amount and the type of currency to convert (1.00 USD): ");
-                userEntry = Console.ReadLine().ToUpper();
+            //EUR to USD
+            Money convertEUR = new USD(amount);
+            result = convertEUR.ConvertFromEUR();
+            Console.WriteLine(result + $" from {amount}EUR");
 
-                if (!userEntry.Contains(".") || !userEntry.Any(char.IsDigit))
-                {
-                    Console.WriteLine("Please be sure that your amount is formatted like so: 0.00");
-                    valid = false;
-                }
-                else
-                {
-                    AmountFromString(userEntry);
-                    valid = true;
-                }
+            //GBP to USD
+            Money convertGBP = new USD(amount);
+            result = convertGBP.ConvertFromGBP();
+            Console.WriteLine(result + $" from {amount}GBP");
 
-                if (!userEntry.Any(char.IsLetter))
-                {
-                    Console.WriteLine("Please be sure that you have entered a valid currency type (USD).");
-                    valid = false;
-                }
-                else
-                {
-                    toConvert = string.Join("", userEntry.Where(char.IsLetter));
-                    valid = ValidateCurencyType(toConvert);
-                }
+            //AUD to USD
+            Money convertJPY = new USD(amount);
+            result = convertJPY.ConvertFromAUD();
+            Console.WriteLine(result + $" from {amount}AUD");
 
-            }
+            //XBT to USD
+            Money convertXBT = new USD(amount);
+            result = convertXBT.ConvertFromXBT();
+            Console.WriteLine(result + $" from {amount}XBT");
         }
 
-        /**********************************************************************************
-        * AmountFromString()
-        *   Creates the amount from the userEntry string
-        **********************************************************************************/
-        private static void AmountFromString(string userEntry)
+        /*****************************************
+        * ConvertToEUR()
+        *****************************************/
+        private static void ConvertToEUR(double amount)
         {
-            var sb = new StringBuilder();
+            string result;
+            //USD to EUR
+            Money convertUSD = new USD(amount);
+            result = convertUSD.ConvertFromUSD();
+            Console.WriteLine(result + $" from {amount}USD");
 
-            foreach (var c in userEntry.Where(c => c == '.' || Char.IsDigit(c)))
-            {
-                sb.Append(c);
-            }
+            //EUR to EUR
+            Money convertEUR = new USD(amount);
+            result = convertEUR.ConvertFromEUR();
+            Console.WriteLine(result + $" from {amount}EUR");
 
-            amount = Convert.ToDouble(sb.ToString());
+            //GBP to EUR
+            Money convertGBP = new USD(amount);
+            result = convertGBP.ConvertFromGBP();
+            Console.WriteLine(result + $" from {amount}GBP");
+
+            //AUD to EUR
+            Money convertJPY = new USD(amount);
+            result = convertJPY.ConvertFromAUD();
+            Console.WriteLine(result + $" from {amount}AUD");
+
+            //XBT to EUR
+            Money convertXBT = new USD(amount);
+            result = convertXBT.ConvertFromXBT();
+            Console.WriteLine(result + $" from {amount}XBT");
         }
 
-        /**********************************************************************************
-        * ValidateCurrencyType()
-        *   Validates currency type and creates object of type Money
-        **********************************************************************************/
-        private static bool ValidateCurencyType(string currencyType)
+        /*****************************************
+        * ConvertToXBT()
+        *****************************************/
+        private static void ConvertToXBT(double amount)
         {
-            bool valid;
+            string result;
+            //USD to XBT
+            Money convertUSD = new XBT(amount);
+            result = convertUSD.ConvertFromUSD();
+            Console.WriteLine(result + $" from {amount}USD");
 
-            if (!currency.Contains(currencyType))
-            {
-                Console.WriteLine($"{currencyType} is not an available currency.");
-                valid = false;
-            }
-            else
-            {
-                valid = true;
-            }
-            return valid;
-        }
+            //EUR to XBT
+            Money convertEUR = new XBT(amount);
+            result = convertEUR.ConvertFromEUR();
+            Console.WriteLine(result + $" from {amount}EUR");
 
-        /**********************************************************************************
-        * Conversion()
-        *   Creates object of correct type and converts currency
-        **********************************************************************************/
-        private static void Conversion(string toConvert, string convertTo)
-        {
-            if (toConvert == "USD")
-            {
-                Money usd = new USD(amount);
-                usd.Conversion(convertTo);
-            }
-            else if (toConvert == "EUR")
-            {
-                Money eur = new EUR(amount);
-                eur.Conversion(convertTo);
-            }
-        }
+            //GBP to XBT
+            Money convertGBP = new XBT(amount);
+            result = convertGBP.ConvertFromGBP();
+            Console.WriteLine(result + $" from {amount}GBP");
 
-        /**********************************************************************************
-        * GetConvertTo()
-        *   Gets currency to be converted to
-        **********************************************************************************/
-        private static void GetConvertTo()
-        {
-            bool valid = false;
+            //AUD to XBT
+            Money convertJPY = new XBT(amount);
+            result = convertJPY.ConvertFromAUD();
+            Console.WriteLine(result + $" from {amount}AUD");
 
-            Console.Clear();
-
-            while (!valid)
-            {
-                Console.WriteLine($"Amount: {amount} Currency Type to Convert: {toConvert} \n");
-                Console.WriteLine("Please enter the currency type you would like to convert to: ");
-                convertTo = Console.ReadLine().ToUpper();
-                valid = ValidateCurencyType(convertTo);
-            }
+            //XBT to XBT
+            Money convertXBT = new XBT(amount);
+            result = convertXBT.ConvertFromXBT();
+            Console.WriteLine(result + $" from {amount}XBT");
         }
     }
 }

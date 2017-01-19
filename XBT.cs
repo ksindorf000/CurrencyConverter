@@ -1,21 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CurrencyConverter
 {
-    internal class USD : Money
+    class XBT : Money
     {
-        public USD(double _amount) : base(_amount)
+        public XBT(double _amount) : base(_amount)
         {
-            symbol = "$";
             amount = _amount;
-            currency = "USD";
+            symbol = "฿";
+            currency = "XBT";
+
         }
+
 
         public override string ConvertFromUSD()
         {
-            result = amount * 1;
+            rate = .00111;
+            result = amount * rate;
             formatResult = result.ToString("N2");
 
             return $"{symbol}{formatResult} {currency}";
@@ -23,8 +28,8 @@ namespace CurrencyConverter
 
         public override string ConvertFromEUR()
         {
-            rate = 0.94038;
-            result = amount / rate;
+            rate = .00118;
+            result = amount * rate;
 
             formatResult = result.ToString("N2");
 
@@ -33,8 +38,8 @@ namespace CurrencyConverter
 
         public override string ConvertFromGBP()
         {
-            rate = 0.81067;
-            result = amount / rate;
+            rate = .00136;
+            result = amount * rate;
 
             formatResult = result.ToString("N2");
 
@@ -43,8 +48,8 @@ namespace CurrencyConverter
 
         public override string ConvertFromAUD()
         {
-            rate = 1.32371;
-            result = amount / rate;
+            rate = .00084;
+            result = amount * rate;
 
             formatResult = result.ToString("N2");
 
@@ -53,8 +58,9 @@ namespace CurrencyConverter
 
         public override string ConvertFromXBT()
         {
-            rate = 904.341;
+            rate = 1;
             result = amount * rate;
+
             formatResult = result.ToString("N2");
 
             return $"{symbol}{formatResult} {currency}";
